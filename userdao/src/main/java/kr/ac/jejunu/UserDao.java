@@ -32,8 +32,8 @@ public class UserDao {
         //mysql driver load
         Class.forName("com.mysql.jdbc.Driver");
         // Connection 맺고
-        return DriverManager.getConnection("jdbc:mysql://192.168.0.54/jeju?characterEncoding=utf-8", // 인코딩을 추가해준다
-        "jeju", "jejupw");
+        return DriverManager.getConnection("jdbc:mysql://localhost/jeju?characterEncoding=utf-8", // 인코딩을 추가해준다
+        "root", "thdgusdn");
     }
 
 
@@ -41,7 +41,7 @@ public class UserDao {
         Connection connection = getConnection();
 
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select * from userinfo(name, password) values (?, ?)");
+                connection.prepareStatement("INSERT INTO userinfo(name, password) values (?, ?)");
         preparedStatement.setString(1, user.getName());
         preparedStatement.setString(2, user.getPassword());
 

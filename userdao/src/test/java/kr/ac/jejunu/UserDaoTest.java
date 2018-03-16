@@ -26,14 +26,14 @@ public class UserDaoTest {
             int id = 1;
             User user = userDao.get(id);
             assertThat(user.getId(), is(1));
-            assertThat(user.getName(), is("허윤호"));
+            assertThat(user.getName(), is("song"));
             assertThat(user.getPassword(), is("1234"));
         }
 
     @Test
     public void add() throws SQLException, ClassNotFoundException{
     User user = new User();
-    user.setName("헐크");
+    user.setName("heol");
     user.setPassword("1111");
     Integer id = userDao.insert(user);  // 헐크와 1111을 DB에 넣고, 헐크에 해당하는 ID 만 리턴받기로 함
 
