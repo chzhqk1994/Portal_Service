@@ -11,18 +11,19 @@ import static org.hamcrest.MatcherAssert.*;  // static 을 붙이면 static 메�
 
 public class UserDaoTest {
 
-    private UserDao userDao;
+    private UserDao userDao; // 제주대는 그대로 UserDao 사용
+    private UserDao hallaUserDao;  // 한라대는 객체를 새로 생성
 
     @Before
     public void setup(){
-        userDao = new UserDao();
+        userDao = new JejuUserDao();
+        hallaUserDao = new HallaUserDao();
     }
 
     @Test
     public void get() throws SQLException, ClassNotFoundException{
         // Exception 처리는 잘 알때 사용, 확신이 없을 땐 알아서 하게 내버려 둬야한다
         // 내가 처리할 수 없는 Exception 은 throw 하는게 맞다.
-            UserDao userDao = new UserDao();
             int id = 1;
             User user = userDao.get(id);
             assertThat(user.getId(), is(1));
@@ -42,5 +43,33 @@ public class UserDaoTest {
     assertThat(insertedUser.getName(), is(user.getName()));
     assertThat(insertedUser.getPassword(), is(user.getPassword()));
     }
+
+
+    @Test
+    public void hallaGet() throws SQLException, ClassNotFoundException{
+        User user = new User();
+        user.setName("heol");
+        user.setPassword("1111");
+        Integer id = hallaUserDao.insert(user);
+
+        User insertedUser = hallaUserDao.get(id);
+        assertThat(insertedUser.getId(), is(id));
+        assertThat(insertedUser.getName(), is(user.getName()));
+        assertThat(insertedUser.getPassword(), is(user.getPassword()));
+    }
+
+    @Test
+    public void hallaAdd() throws SQLException, ClassNotFoundException{
+        User user = new User();
+        user.setName("heol");
+        user.setPassword("1111");
+        Integer id = hallaUserDao.insert(user);
+
+        User insertedUser = hallaUserDao.get(id);
+        assertThat(insertedUser.getId(), is(id));
+        assertThat(insertedUser.getName(), is(user.getName()));
+        assertThat(insertedUser.getPassword(), is(user.getPassword()));
+    }
+
 }
 

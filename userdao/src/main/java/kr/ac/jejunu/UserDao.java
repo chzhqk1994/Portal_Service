@@ -2,7 +2,7 @@ package kr.ac.jejunu;
 
 import java.sql.*;
 
-public class UserDao {
+public abstract class UserDao {
     public User get(int id) throws ClassNotFoundException, SQLException{
         Connection connection = getConnection();
 
@@ -27,16 +27,6 @@ public class UserDao {
     }
 
 
-    // Extract >> Method
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        //mysql driver load
-        Class.forName("com.mysql.jdbc.Driver");
-        // Connection 맺고
-        return DriverManager.getConnection("jdbc:mysql://localhost/jeju?characterEncoding=utf-8", // 인코딩을 추가해준다
-        "root", "thdgusdn");
-    }
-
-
     public Integer insert(User user) throws SQLException, ClassNotFoundException{
         Connection connection = getConnection();
 
@@ -58,4 +48,13 @@ public class UserDao {
         connection.close();
         return id;
     }
+
+    // Extract >> Method
+    abstract public Connection getConnection() throws ClassNotFoundException, SQLException;
+    // 제주대와 한라대에서 비슷한 내용의 요청이 들어와서 각 학교의 getConnection을 만들지 않고 추상화를 하려고 한다.
+    // 제주대와 한라대에서 getConnection 에 뭐가 있는지 모르므로 추상화를 하고 UserDaoTest 에서 JejuUserDao와 HallaUserDao를 만들고 UserDao를 참조
+    // 메소드가 abstract되면 클래스도 abstract 되어야 한다
+    // 추상화를 했는데 private 이면 외부에서 사용 못하므로 private 에서 public 으로 바꿔준다
+    // 추상화 하면 body를 가질수가 없어 내용물을 모두 없애고 선언만 해준다.
+
 }
