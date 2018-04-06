@@ -38,13 +38,45 @@ public class UserDaoTest {
     @Test
     public void add() throws SQLException, ClassNotFoundException{
         User user = new User();
-        user.setName("heol");
-        user.setPassword("1111");
-        Integer id = userDao.insert(user);  // 헐크와 1111을 DB에 넣고, 헐크에 해당하는 ID 만 리턴받기로 함
+        Integer id = insertUserTest(user);
 
         User insertedUser = userDao.get(id);
         assertThat(insertedUser.getId(), is(id)); // inserted 된 id  가 위에있는 user 의 Id 와 같는지 판별
         assertThat(insertedUser.getName(), is(user.getName()));
         assertThat(insertedUser.getPassword(), is(user.getPassword()));
+    }
+
+    @Test
+    public void update() throws SQLException, ClassNotFoundException {
+        User user = new User();
+        Integer id = insertUserTest(user);
+
+        user.setId(id);
+        user.setName("update");
+        user.setPassword("1234");
+        userDao.update(user);
+
+        User updatedUser = userDao.get(id);
+
+        assertThat(updatedUser.getId(), is(user.getId()));
+        assertThat(updatedUser.getName(), is(user.getName()));
+        assertThat(updatedUser.getPassword(), is(user.getPassword()));
+    }
+
+    private Integer insertUserTest(User user) throws SQLException, ClassNotFoundException {
+        user.setName("heol");
+        user.setPassword("1111");
+        return userDao.insert(user);
+    }
+
+    @Test
+    public void delete() throws SQLException, ClassNotFoundException {
+        User user = new User();
+        Integer id = insertUserTest(user);
+
+        userDao.delete(id); // id만 받음
+
+        User deletedUser = userDao.get(id);
+        assertThat(deletedUser, nullValue()); // 수정했고 삭제하고나서 결과가 널 이어야 함
     }
 }
