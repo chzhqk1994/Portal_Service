@@ -1,9 +1,18 @@
 package kr.ac.jejunu;
 
-public class DaoFactory {
-    private UserDao userDao;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-    public UserDao getUserDao() {
-        return new UserDao(new JejuConnectionMaker());
+@Configuration
+public class DaoFactory {
+
+    @Bean
+    public UserDao userDao() {
+        return new UserDao(connectionMaker());
+    }
+
+    @Bean
+    public ConnectionMaker connectionMaker(){
+        return new JejuConnectionMaker();
     }
 }
