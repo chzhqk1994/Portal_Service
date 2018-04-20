@@ -1,11 +1,14 @@
 package kr.ac.jejunu;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDao {
     private final ConnectionMaker connectionMaker;
 
-    public UserDao( ConnectionMaker connectionMaker) {
+    public UserDao(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
 
@@ -18,10 +21,9 @@ public class UserDao {
         try {
             connection = connectionMaker.getConnection();
 
-            // sql 작성하고
-            preparedStatement =
-                    connection.prepareStatement("SELECT * FROM test WHERE id = ?");
-            preparedStatement.setInt(1, id);
+            StatementStrategy statementStrategy = new GetUserStatementStrategy(id);
+            preparedStatement = statementStrategy.makeStatement(connection);
+
             // sql 실행하고
             resultSet = preparedStatement.executeQuery();
             // 결과를 User에 매핑하고
@@ -60,8 +62,7 @@ public class UserDao {
         return user;
     }
 
-
-    public Integer insert(User user) throws SQLException, ClassNotFoundException{
+    public Integer insert(User user) throws SQLException, ClassNotFoundException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -70,15 +71,13 @@ public class UserDao {
         try {
             connection = connectionMaker.getConnection();
 
-            preparedStatement = connection.prepareStatement("INSERT INTO test(name, password) VALUES (?, ?)");
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getPassword());
+            StatementStrategy statementStrategy = new InserstUserStatementStrategy(user);
+            preparedStatement = statementStrategy.makeStatement(connection);
 
             preparedStatement.executeUpdate();
 
             // 등록된 과정을 확인해주기 위한 코드
-            preparedStatement = connection.prepareStatement("SELECT last_insert_id()");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
             id = resultSet.getInt(1);
         } finally { // Alt + Command + T
@@ -105,8 +104,6 @@ public class UserDao {
             }
 
         }
-
-
         return id;
     }
 
@@ -117,14 +114,12 @@ public class UserDao {
         try {
             connection = connectionMaker.getConnection();
 
-            preparedStatement = connection.prepareStatement("UPDATE test SET name = ?, password = ? WHERE id = ?");
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getId());
+            StatementStrategy statementStrategy = new UpdateUserStatementStrategy(user);
+            preparedStatement = statementStrategy.makeStatement(connection);
 
             preparedStatement.executeUpdate();
 
-            } finally { // Alt + Command + T
+        } finally { // Alt + Command + T
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
@@ -151,8 +146,8 @@ public class UserDao {
         try {
             connection = connectionMaker.getConnection();
 
-            preparedStatement = connection.prepareStatement("DELETE FROM test WHERE id = ?");
-            preparedStatement.setInt(1, id);
+            StatementStrategy statementStrategy = new DeleteUserStatementStrategy(id);
+            preparedStatement = statementStrategy.makeStatement(connection);
 
             preparedStatement.executeUpdate();
 
@@ -174,4 +169,5 @@ public class UserDao {
 
         }
     }
+
 }
