@@ -1,11 +1,13 @@
 package kr.ac.jejunu.servlet;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.*;
 import java.io.IOException;
 
 @Slf4j
+@Controller("/hello")
 public class HelloServlet extends GenericServlet {
     @Override
     public void destroy() {  // 자원해지

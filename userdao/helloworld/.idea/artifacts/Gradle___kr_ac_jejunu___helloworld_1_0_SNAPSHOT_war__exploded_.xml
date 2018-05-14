@@ -18,6 +18,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Gradle: mysql:mysql-connector-java:5.1.37" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:5.0.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.integration:spring-integration-groovy:5.0.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.integration:spring-integration-scripting:5.0.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.integration:spring-integration-core:5.0.4.RELEASE" />
@@ -28,6 +29,7 @@
           <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-aop:5.0.5.RELEASE" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-classic:1.2.3" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-web:5.0.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-messaging:5.0.5.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-tx:5.0.5.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-beans:5.0.5.RELEASE" />
@@ -36,8 +38,8 @@
           <element id="library" level="project" name="Gradle: org.codehaus.groovy:groovy-all:2.4.12" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-jcl:5.0.5.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.retry:spring-retry:1.2.2.RELEASE" />
-          <element id="library" level="project" name="Gradle: io.projectreactor:reactor-core:3.1.6.RELEASE" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.2.3" />
+          <element id="library" level="project" name="Gradle: io.projectreactor:reactor-core:3.1.6.RELEASE" />
           <element id="library" level="project" name="Gradle: org.reactivestreams:reactive-streams:1.0.2" />
         </element>
       </element>
